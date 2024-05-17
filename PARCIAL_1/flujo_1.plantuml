@@ -1,0 +1,44 @@
+@startuml 1
+start
+
+if (tienda_abierta) then (si)
+    :Paso 1: La tienda está abierta.;
+    if (ofertas_especiales) then (si)
+        :Añadir 'ofertas' a la ruta.;
+        :Paso 2: Hay ofertas especiales;
+    else (no)
+        :Añadir 'entrada' a la ruta.;
+        :Paso 2: No hay ofertas especiales;
+    endif
+
+    :Evaluar el primer producto;
+    if (primer_producto es de la sección 'lácteos') then (si)
+        :Añadir 'lácteos' a la ruta.;
+        :Caso 1: El primer producto es de la sección 'lácteos';
+    elseif (primer_producto es de la sección 'frutas y verduras') then (si)
+        :Añadir 'frutas y verduras' a la ruta.;
+        :Caso 2: El primer producto es de la sección 'frutas y verduras';
+    elseif (primer_producto es de la sección 'carnes') then (si)
+        :Añadir 'carnes' a la ruta.;
+        :Caso 3: El primer producto es de la sección 'carnes';
+    else (otro)
+        :Añadir 'otras secciones' a la ruta.;
+        :Caso 4: El primer producto es de 'otras secciones';
+    endif
+
+    :Iterar sobre los productos restantes;
+    while (hay productos restantes) is (si)
+        :Evaluar el producto actual;
+        if (producto actual está en alguna sección) then (si)
+            :Añadir sección a la ruta si no está presente;
+            :Paso n: Encontrar producto en la sección - Añadir sección a la ruta;
+        endif
+    endwhile
+
+    :Ruta generada;
+else (no)
+    :Paso 1: La tienda está cerrada.;
+endif
+
+stop
+@enduml

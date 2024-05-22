@@ -1,24 +1,25 @@
-name: C++ CI
+name: C/C++ CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the code
+    - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up C++ environment
-      run: sudo apt-get install g++ -y
+      uses: actions/setup-cpp@v1
+      with:
+        compiler: 'gcc'
 
-    - name: Compile code
-      run: g++ -o test_program parcial_1.cpp
+    - name: Build and run tests
+      run: |
+        sudo apt-get install -y g++
+        cd src
+        g++ -o parcial_1 parcial_1.cpp
+        ./parcial_1
 
-    - name: Run tests
-      run: ./test_program
